@@ -1,4 +1,10 @@
 /* ADE7816 Headers and Registers derived from linux implementation*/
+
+#ifndef __ADE7816_H__
+#define __ADE7816_H__
+
+#include <Arduino.h>
+
 #define ADE7816_ADDR (0x38)
 
 // Calibration and Power Quality Registers
@@ -141,3 +147,23 @@
 #define PCF_F_COEFF_60HZ (0x401235)
 
 #define DICOEFF_DEFAULT (0xFFF8000)
+
+const int energy_CS = SS; // Use default SS pin for unknown Arduino
+
+class ADE7816_SPI
+{
+	public:
+        ADE7816_SPI(int pin=energy_CS);
+    private:
+        int _cs;
+};
+
+class ADE7816_I2C
+{
+    public:
+        ADE7816_I2C(int addr=ADE7816_ADDR);
+    private:
+        int _addr;
+};
+
+#endif
