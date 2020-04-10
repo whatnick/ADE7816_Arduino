@@ -150,18 +150,44 @@
 
 const int energy_CS = SS; // Use default SS pin for unknown Arduino
 
-class ADE7816_SPI
+class ADE7816
+{
+    public:
+        int init();
+        int getEnergyRegisters(float *energyRegVal);
+        int getVoltageRegisters(float *voltageRegVal);
+        int getCurrentRegisters(float *currentRegVal);
+        int writeCalConstants();
+        int writeMultipleRegisters();
+        int readMultipleRegisters();
+    
+    protected:
+        virtual int _writeRegister(const unsigned int reg, const unsigned int val)=0;
+        virtual int _readRegister(const unsigned int reg)=0;
+};
+
+class ADE7816_SPI : public virtual ADE7816
 {
 	public:
-        ADE7816_SPI(int pin=energy_CS);
+        ADE7816_SPI(int pin=energy_CS);\
+
+    protected:
+        virtual int _writeRegister(const unsigned int reg, const unsigned int val);
+        virtual int _readRegister(const unsigned int reg);
+
     private:
         int _cs;
 };
 
-class ADE7816_I2C
+class ADE7816_I2C : public virtual ADE7816
 {
     public:
         ADE7816_I2C(int addr=ADE7816_ADDR);
+
+    protected:
+        virtual int _writeRegister(const unsigned int reg, const unsigned int val);
+        virtual int _readRegister(const unsigned int reg);
+
     private:
         int _addr;
 };

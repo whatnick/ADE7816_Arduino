@@ -4,11 +4,14 @@
 
 ADE7816_SPI eic = ADE7816_SPI();
 
-void setup() {
+void setup()
+{
   /* Initialize the serial port to host */
   Serial.begin(115200);
+  eic.init();
 }
 
-void loop() {
-    
+void loop()
+{
+
 }

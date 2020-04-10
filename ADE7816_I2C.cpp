@@ -6,6 +6,7 @@
 
 #include "ADE7816.h"
 
-ADE7816_I2C::ADE7816_I2C(int addr){
+ADE7816_I2C::ADE7816_I2C(int addr)
+{
     _addr = addr;
 }
