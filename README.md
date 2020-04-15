@@ -7,3 +7,7 @@ The driver supports :
 - I2C mode for energy reading
 
 The code here is inspired by Javascript implementation [here](https://github.com/tadakado/smart-meter/tree/master/Soft) and C implementation [here](https://github.com/andrew-gillan/energon/blob/master/scr/ADE7816.c).
+
+## Supported Hardware
+
+This driver has been tested with the [ADE7816 Breakout](https://github.com/whatnick/ADE7816_Breakout)
