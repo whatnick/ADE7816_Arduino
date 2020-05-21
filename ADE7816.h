@@ -4,7 +4,7 @@
 #define __ADE7816_H__
 
 #include <Arduino.h>
-
+#include "SPI.h"
 #define ADE7816_ADDR (0x38)
 
 // Calibration and Power Quality Registers
@@ -148,7 +148,7 @@
 
 #define DICOEFF_DEFAULT (0xFFF8000)
 
-const int energy_CS = SS; // Use default SS pin for unknown Arduino
+
 
 class ADE7816
 {
@@ -166,27 +166,32 @@ class ADE7816
         virtual int _readRegister(const unsigned int reg)=0;
 };
 
-class ADE7816_SPI : public virtual ADE7816
+class ADE7816_SPI
 {
 	public:
-        ADE7816_SPI(int pin=energy_CS);\
+        
+        ADE7816_SPI(uint8_t spi_bus);
+        void begin(int8_t sck=SCK, int8_t miso=MISO, int8_t mosi=MOSI, int8_t ss=SS);
+        void settings(uint32_t clock=2000000, uint8_t bitOrder=SPI_MSBFIRST, uint8_t dataMode=SPI_MODE3);
+        void runDsp();
+        void stopDsp();
+        void writeRegister(uint16_t reg, uint16_t val);
+        uint32_t readRegister(uint16_t reg);
+        uint32_t _clock;
+        uint8_t _bitOrder;
+        uint8_t _dataMode;
+        uint8_t _ss;
 
-    protected:
-        virtual int _writeRegister(const unsigned int reg, const unsigned int val);
-        virtual int _readRegister(const unsigned int reg);
-
-    private:
-        int _cs;
 };
 
-class ADE7816_I2C : public virtual ADE7816
+class ADE7816_I2C //: public virtual ADE7816
 {
     public:
         ADE7816_I2C(int addr=ADE7816_ADDR);
 
     protected:
-        virtual int _writeRegister(const unsigned int reg, const unsigned int val);
-        virtual int _readRegister(const unsigned int reg);
+        virtual int _writeRegister(unsigned int reg, unsigned int val);
+        virtual int _readRegister(unsigned int reg);
 
     private:
         int _addr;
