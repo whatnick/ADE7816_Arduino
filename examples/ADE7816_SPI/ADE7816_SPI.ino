@@ -10,17 +10,16 @@ uint32_t id_rms = 0;
 uint32_t ie_rms = 0;
 uint32_t if_rms = 0;
 
-ADE7816_SPI eic = ADE7816_SPI(VSPI);
+ADE7816_SPI eic = ADE7816_SPI();
 
 void setup()
 {
 
   /* initialisation the serial port to host */
   Serial.begin(115200);
-  eic.settings(200000, MSBFIRST, SPI_MODE3);
   //initialisation with default spi pins
   eic.begin();
-  //initialisation with specified spi pins
+  //initialisation with specified spi pins (esp32 only)
   //eic.begin(SCK, MISO, MOSI, SS);
   eic.runDsp();
   eic.runDsp();
