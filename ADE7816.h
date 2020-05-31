@@ -4,7 +4,9 @@
 #define __ADE7816_H__
 
 #include <Arduino.h>
-#include "SPI.h"
+#include <SPI.h>
+#include <Wire.h>
+
 #define ADE7816_ADDR (0x38)
 
 // Calibration and Power Quality Registers
@@ -178,16 +180,21 @@ public:
     uint8_t _bitOrder;
     uint8_t _dataMode;
     uint8_t _ss;
+
 protected:
     int _writeRegister(const unsigned int reg, const unsigned int val);
     int _readRegister(const unsigned int reg);
-
 };
 
 class ADE7816_I2C : public virtual ADE7816
 {
 public:
     ADE7816_I2C(int addr = ADE7816_ADDR);
+    void begin();
+    void runDsp();
+    void stopDsp();
+    void writeRegister(uint16_t reg, uint16_t val);
+    uint32_t readRegister(uint16_t reg);
 
 protected:
     virtual int _writeRegister(unsigned int reg, unsigned int val);
@@ -195,6 +202,11 @@ protected:
 
 private:
     int _addr;
+#ifdef ARDUINO_ARCH_ESP32
+    TwoWire i2c = TwoWire(0);
+#else
+    TwoWire i2c = TwoWire();
+#endif
 };
 
 #endif
