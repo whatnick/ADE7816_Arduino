@@ -1,6 +1,10 @@
-# ADE7816 SPI/I2C Arduino Driver
+# ADE7816 SPI Arduino Driver
 
 ![Arduino SPI](doc/Arduino_SPI_code.png)
+
+# ADE7816 I2C Arduino Driver
+
+![Arduino I2C](doc/Arduino_I2C_code.png)
 
 This is an Arduino Library to read ADE7816 Energy Monitor ASIC from Arduino compatible microcontrollers.
 The driver supports :
